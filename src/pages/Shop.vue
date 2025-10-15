@@ -96,9 +96,9 @@
             <div class="total-row">
               <strong>Total: Ksh {{ cartTotal.toLocaleString() }}</strong>
             </div>
-            <button @click="proceedToCheckout" class="checkout-btn btn btn-primary btn-lg btn-enhanced">
-              <i class="fas fa-credit-card"></i>
-              <span>Proceed to Checkout</span>
+            <button @click="proceedToOrder" class="checkout-btn btn btn-primary btn-lg btn-enhanced">
+              <i class="fas fa-phone"></i>
+              <span>Call to Place Order</span>
             </button>
           </div>
         </div>
@@ -154,12 +154,12 @@
                     </button>
                     
                     <button 
-                      @click="buyNow(product)" 
-                      class="buy-now-btn btn btn-secondary btn-enhanced"
+                      @click="orderNow(product)" 
+                      class="order-now-btn btn btn-secondary btn-enhanced"
                       :disabled="isProcessing"
                     >
-                      <i class="fas fa-credit-card"></i>
-                      <span>Buy Now</span>
+                      <i class="fas fa-phone"></i>
+                      <span>Call to Order</span>
                     </button>
                   </div>
                 </div>
@@ -177,12 +177,12 @@
       </div>
     </div>
 
-    <!-- Enhanced Payment Modal -->
-    <PaymentModal 
-      v-if="showPaymentModal"
+    <!-- Enhanced Contact Order Modal -->
+    <ContactOrderModal 
+      v-if="showContactModal"
       :product="selectedProduct"
-      @close="closePaymentModal"
-      @success="handlePaymentSuccess"
+      :cart-items="showingFullCart ? cartItems : null"
+      @close="closeContactModal"
     />
   </div>
 </template>
@@ -194,7 +194,7 @@ import { storeToRefs } from 'pinia'
 import { useCartStore } from '@/store/cart'
 import { useNotificationStore } from '@/store/notification'
 import { useGSAP } from '@/composables/useGSAP'
-import PaymentModal from '@/components/ui/PaymentModal.vue'
+import ContactOrderModal from '@/components/ui/ContactOrderModal.vue'
 
 // GSAP composable
 const { 
@@ -227,9 +227,10 @@ const productCardsRefs = ref([])
 
 // Local state
 const isProcessing = ref(false)
-const showPaymentModal = ref(false)
+const showContactModal = ref(false)
 const selectedProduct = ref(null)
 const showCartDetails = ref(false)
+const showingFullCart = ref(false)
 
 // Products data
 const products = ref([
@@ -474,8 +475,10 @@ const toggleCartDetails = () => {
   }
 }
 
-const proceedToCheckout = () => {
-  notificationStore.info('Checkout functionality coming soon!')
+const proceedToOrder = () => {
+  selectedProduct.value = null
+  showingFullCart.value = true
+  showContactModal.value = true
 }
 
 const getProductIcon = (productId) => {
@@ -483,19 +486,16 @@ const getProductIcon = (productId) => {
   return product ? product.icon : 'fas fa-chess'
 }
 
-const buyNow = (product) => {
+const orderNow = (product) => {
   selectedProduct.value = product
-  showPaymentModal.value = true
+  showingFullCart.value = false
+  showContactModal.value = true
 }
 
-const closePaymentModal = () => {
-  showPaymentModal.value = false
+const closeContactModal = () => {
+  showContactModal.value = false
   selectedProduct.value = null
-}
-
-const handlePaymentSuccess = () => {
-  closePaymentModal()
-  notificationStore.success('Payment successful! Your order is being processed.')
+  showingFullCart.value = false
 }
 </script>
 

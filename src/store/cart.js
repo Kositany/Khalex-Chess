@@ -60,14 +60,57 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
+  // Helper methods for call-to-order system
+  const getOrderSummary = () => {
+    return {
+      items: items.value.map(item => ({
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price,
+        total: item.quantity * item.price
+      })),
+      totalQuantity: cartCount.value,
+      totalAmount: cartTotal.value
+    }
+  }
+
+  const generateOrderText = () => {
+    if (items.value.length === 0) {
+      return 'Cart is empty'
+    }
+
+    let orderText = 'Order Summary:\n\n'
+    
+    items.value.forEach((item, index) => {
+      orderText += `${index + 1}. ${item.name}\n`
+      orderText += `   Quantity: ${item.quantity}\n`
+      orderText += `   Price: Ksh ${item.price.toLocaleString()}\n`
+      orderText += `   Subtotal: Ksh ${(item.quantity * item.price).toLocaleString()}\n\n`
+    })
+
+    orderText += `Total Items: ${cartCount.value}\n`
+    orderText += `Total Amount: Ksh ${cartTotal.value.toLocaleString()}\n\n`
+    orderText += 'Please confirm availability and delivery details.'
+
+    return orderText
+  }
+
+  const hasItems = computed(() => items.value.length > 0)
+
+  const isEmpty = computed(() => items.value.length === 0)
+
   return {
     items,
     cartCount,
     cartTotal,
+    hasItems,
+    isEmpty,
     addToCart,
     removeFromCart,
     updateQuantity,
     clearCart,
-    loadCart
+    loadCart,
+    getOrderSummary,
+    generateOrderText
   }
 })

@@ -24,31 +24,30 @@
       <div class="hero-content">
         <div class="hero-text">
           <span class="hero-eyebrow animate-entrance">
-            Kenya’s award-driving chess artistry
+            Unleash Young Minds' Potential Through Chess
           </span>
 
           <h1 class="hero-title" ref="headlineRef">
-  <span class="title-line">We Shape Kenya’s</span>
-  <span class="title-line">Young Chess Champions</span>
-  <span class="title-line title-highlight">Through World-Class Coaching Labs</span>
+  <span class="title-line">Start Your Chess Journey.</span>
+  <span class="title-line title-highlight" data-text="At Khalex Chess.">At Khalex Chess.</span>
 </h1>
 
 <p class="hero-subtitle animate-entrance" ref="subtitleRef">
-  Our academy blends expert instructors, tournament-tested strategies, and 
-  interactive learning to build confident problem-solvers—ready to dominate 
-  any board, in school and beyond.
+  We train young thinkers to outplay, outsmart,
+  and outgrow the competition—on the board and in life.
 </p>
 
 <div class="hero-badges">
   <div class="hero-badge glass-badge animate-entrance">
     <i class="fas fa-chess-knight"></i>
-    Structured chess mastery for Kenyan kids of all levels
+    Built for kids who dare to win.
   </div>
   <div class="hero-badge glass-badge animate-entrance">
     <i class="fas fa-users"></i>
-    Professional coaches with proven student success stories
+    Top coaches. Proven champions.
   </div>
 </div>
+
 
 
           <div class="hero-actions hero-magnetic">
@@ -184,134 +183,173 @@ const scrollToShop = () => {
 }
 
 onMounted(() => {
-  // Motion cues follow the GSAP hero + ScrollTrigger solution playbooks shared by the user.
+  // Optimized performance-first GSAP animations
+  // Set will-change properties for hardware acceleration
+  gsap.set(['.aurora-layer', '.hero-orb', '[data-parallax-depth]', '.hero-visual-card'], {
+    willChange: 'transform'
+  })
+
   const { words, chars } = splitText(headlineRef.value, {
     wordClass: 'hero-word',
     charClass: 'hero-char'
   })
 
-  const heroTimeline = createTimeline({ delay: 0.25 })
-
-  heroTimeline.from('.aurora-layer', {
-    autoAlpha: 0,
-    scale: 0.85,
-    yPercent: 12,
-    duration: 1.4,
-    ease: 'power3.out',
-    stagger: 0.15
+  // Main entrance timeline with optimized performance
+  const heroTimeline = createTimeline({ 
+    delay: 0.15,
+    onComplete: () => {
+      // Remove will-change after animations complete
+      gsap.set('.aurora-layer', { willChange: 'auto' })
+    }
   })
 
+  // Aurora layers with simpler transforms for better performance
+  heroTimeline.from('.aurora-layer', {
+    opacity: 0,
+    scale: 0.9,
+    duration: 1.2,
+    ease: 'power2.out',
+    stagger: 0.1
+  })
+
+  // Optimized text animations - fewer elements animating simultaneously
   if (words.length) {
     heroTimeline.from(words, {
-      autoAlpha: 0,
-      yPercent: 60,
-      duration: 1.1,
-      ease: 'power3.out',
-      stagger: 0.08
-    }, '-=1.1')
-  }
-
-  if (chars.length) {
-    heroTimeline.from(chars, {
-      autoAlpha: 0,
-      yPercent: 120,
+      opacity: 0,
+      y: 40,
       duration: 0.8,
-      ease: 'power4.out',
-      stagger: 0.006
-    }, '-=1')
+      ease: 'power2.out',
+      stagger: 0.05
+    }, '-=0.8')
   }
 
-  if (subtitleRef.value) {
-    heroTimeline.from(subtitleRef.value, {
-      autoAlpha: 0,
-      y: 30,
-      duration: 0.9,
-      ease: 'power3.out'
+  // Simplified char animation with reduced stagger for performance
+  if (chars.length > 0 && chars.length < 50) { // Only animate chars if reasonable count
+    heroTimeline.from(chars, {
+      opacity: 0,
+      y: 20,
+      duration: 0.6,
+      ease: 'power2.out',
+      stagger: 0.01
     }, '-=0.6')
   }
 
-  heroTimeline.from('.hero-badge', {
-    autoAlpha: 0,
-    y: 20,
-    duration: 0.7,
-    stagger: 0.12,
-    ease: 'power3.out'
-  }, '-=0.5')
+  // Batch smaller elements for better performance
+  const smallElements = [
+    { selector: subtitleRef.value, delay: '-=0.4' },
+    { selector: '.hero-badge', delay: '-=0.3' },
+    { selector: '.hero-actions .hero-btn', delay: '-=0.2' },
+    { selector: '.hero-stat-card', delay: '-=0.1' }
+  ]
 
-  heroTimeline.from('.hero-actions .hero-btn', {
-    autoAlpha: 0,
-    y: 18,
-    duration: 0.7,
-    stagger: 0.1,
-    ease: 'power3.out'
-  }, '-=0.55')
+  smallElements.forEach(({ selector, delay }) => {
+    if (selector) {
+      heroTimeline.from(selector, {
+        opacity: 0,
+        y: 20,
+        duration: 0.6,
+        ease: 'power2.out',
+        stagger: 0.08
+      }, delay)
+    }
+  })
 
-  heroTimeline.from('.hero-stat-card', {
-    autoAlpha: 0,
-    y: 24,
-    duration: 0.8,
-    stagger: 0.1,
-    ease: 'power3.out'
-  }, '-=0.4')
-
+  // Optimized magnetic hover with reduced complexity
   enableMagneticHover('.hero-btn', {
-    strength: 0.55,
-    scale: 1.12,
-    rotate: 7.5
+    strength: 0.3,
+    scale: 1.05,
+    rotate: 3
   })
 
+  // Simplified floating animation with better performance
   createFloatingAnimation('.hero-orb', {
-    amplitude: 28,
-    rotation: 8,
-    duration: 6
+    amplitude: 15,
+    rotation: 4,
+    duration: 8 // Slower = smoother
   })
 
-  const parallaxLayers = gsap.utils.toArray('[data-parallax-depth]')
-  parallaxLayers.forEach((layer) => {
-    const depth = parseFloat(layer.dataset.parallaxDepth) || 0.3
-    gsap.to(layer, {
-      yPercent: depth * -25,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroSection.value,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true
-      }
+  // Throttled parallax for better scroll performance
+  let ticking = false
+  const updateParallax = () => {
+    const parallaxLayers = document.querySelectorAll('[data-parallax-depth]')
+    parallaxLayers.forEach((layer) => {
+      const depth = parseFloat(layer.dataset.parallaxDepth) || 0.3
+      gsap.to(layer, {
+        yPercent: depth * -15, // Reduced movement for smoothness
+        ease: 'none',
+        duration: 0.1,
+        scrollTrigger: {
+          trigger: heroSection.value,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1, // Smooth scrub value
+          onUpdate: () => {
+            if (!ticking) {
+              requestAnimationFrame(() => {
+                ticking = false
+              })
+              ticking = true
+            }
+          }
+        }
+      })
     })
-  })
+  }
 
+  updateParallax()
+
+  // Simplified visual card animation
   if (visualCard.value) {
     gsap.fromTo(
       visualCard.value,
-      { y: 50, autoAlpha: 0, rotateX: 8, rotateY: -6, transformPerspective: 1000 },
-      { y: 0, autoAlpha: 1, rotateX: 0, rotateY: 0, duration: 1.2, ease: 'power3.out', delay: 0.6 }
+      { 
+        opacity: 0, 
+        y: 30,
+        rotationX: 5,
+        rotationY: -3,
+        transformPerspective: 1000
+      },
+      { 
+        opacity: 1, 
+        y: 0,
+        rotationX: 0,
+        rotationY: 0,
+        duration: 1,
+        ease: 'power2.out',
+        delay: 0.5
+      }
     )
 
+    // Lighter scroll-based card animation
     gsap.to(visualCard.value, {
-      rotateY: 7,
-      rotateX: -5,
-      yPercent: -8,
+      rotationY: 4,
+      rotationX: -2,
+      y: -10,
       ease: 'none',
       scrollTrigger: {
         trigger: heroSection.value,
         start: 'top top',
         end: 'bottom top',
-        scrub: true
+        scrub: 2 // Smoother scrub
       }
     })
   }
 
+  // Optimized counter animation with better performance
   const animateCounter = (element, target, suffix = '+') => {
     if (!element) return
+    
     const counter = { value: 0 }
     gsap.to(counter, {
       value: target,
-      duration: 2.4,
-      ease: 'power3.out',
-      delay: 1.1,
+      duration: 2,
+      ease: 'power2.out',
+      delay: 0.8,
       onUpdate: () => {
-        element.textContent = `${Math.round(counter.value).toLocaleString()}${suffix}`
+        // Use requestAnimationFrame for smoother updates
+        requestAnimationFrame(() => {
+          element.textContent = `${Math.round(counter.value).toLocaleString()}${suffix}`
+        })
       }
     })
   }
@@ -329,6 +367,9 @@ onMounted(() => {
   padding: clamp($space-16, 12vh, $space-24) 0 $space-12;
   color: var(--text-primary);
   overflow: hidden;
+  // Hardware acceleration for smoother performance
+  transform: translateZ(0);
+  will-change: scroll-position;
 }
 
 .hero-background {
@@ -336,6 +377,8 @@ onMounted(() => {
   inset: 0;
   overflow: hidden;
   z-index: 1;
+  // Optimize layer compositing
+  transform: translateZ(0);
 }
 
 .bg-image {
@@ -347,7 +390,10 @@ onMounted(() => {
   transform: translate(-50%, -50%) scale(1.08);
   object-fit: cover;
   filter: brightness(0.5) contrast(1.2) saturate(1.1);
-  transition: transform $duration-slow $ease-out;
+  transition: transform 0.3s ease-out;
+  // Hardware acceleration
+  will-change: transform;
+  transform-style: preserve-3d;
 
   :root.light & {
     filter: brightness(0.78) contrast(1.05) saturate(0.95);
@@ -359,9 +405,11 @@ onMounted(() => {
   inset: -20% -20% auto -20%;
   height: 140%;
   width: 140%;
-  filter: blur(80px);
+  filter: blur(60px); // Reduced blur for better performance
   mix-blend-mode: screen;
   pointer-events: none;
+  // Optimize compositing
+  transform: translateZ(0);
 }
 
 .aurora-layer {
@@ -371,6 +419,9 @@ onMounted(() => {
   opacity: 0.6;
   transform: rotate(25deg);
   background: radial-gradient(circle at center, rgba(212, 175, 55, 0.3) 0%, rgba(204, 119, 153, 0.2) 55%, transparent 100%);
+  // Hardware acceleration for smooth animation
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
 
   &.aurora-1 {
     transform: translate(-10%, -20%) rotate(15deg);
@@ -396,6 +447,8 @@ onMounted(() => {
   background-size: 80px 80px;
   opacity: 0.3;
   mix-blend-mode: screen;
+  // Optimize background rendering
+  will-change: auto;
 }
 
 .hero-orb {
@@ -403,9 +456,12 @@ onMounted(() => {
   width: clamp(10rem, 18vw, 16rem);
   height: clamp(10rem, 18vw, 16rem);
   border-radius: 50%;
-  filter: blur(0.5rem);
+  filter: blur(0.4rem); // Reduced blur
   opacity: 0.45;
   background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.5), rgba(255, 255, 255, 0) 70%);
+  // Hardware acceleration for floating animation
+  will-change: transform;
+  transform-style: preserve-3d;
 
   &.orb-1 {
     top: 10%;
@@ -427,9 +483,11 @@ onMounted(() => {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"%3E%3Cfilter id="n" x="0" y="0" width="1" height="1"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="120" height="120" filter="url(%23n)" opacity="0.18"/%3E%3C/svg%3E');
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"%3E%3Cfilter id="n" x="0" y="0" width="1" height="1"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="120" height="120" filter="url(%23n)" opacity="0.15"/%3E%3C/svg%3E');
   mix-blend-mode: soft-light;
   pointer-events: none;
+  // Lighter noise for better performance
+  opacity: 0.6;
 }
 
 .hero-shell {
@@ -486,17 +544,46 @@ onMounted(() => {
 }
 
 .title-highlight {
-  background: linear-gradient(135deg, #d4af37 15%, #e6d78f 45%, #cc8899 80%);
+  background: linear-gradient(135deg, #d4af37 0%, #f7dc6f 25%, #e67e22 50%, #c0392b 75%, #8e44ad 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 8px 28px rgba(212, 175, 55, 0.35);
+  // Enhanced gradient animation
+  background-size: 200% auto;
+  animation: gradientShift 3s ease-in-out infinite;
+  // Add a subtle glow effect
+  position: relative;
+  
+  &::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #d4af37 0%, #f7dc6f 25%, #e67e22 50%, #c0392b 75%, #8e44ad 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: blur(3px);
+    opacity: 0.5;
+    z-index: -1;
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .hero-word,
 .hero-char {
   display: inline-block;
-  will-change: transform, opacity;
+  // Only set will-change during animation, removed after
+  transform-style: preserve-3d;
 }
 
 .hero-subtitle {
@@ -504,6 +591,8 @@ onMounted(() => {
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.8);
   max-width: 560px;
+  // Hardware acceleration for smoother text rendering
+  transform: translateZ(0);
 
   :root.light & {
     color: rgba(26, 26, 26, 0.7);
@@ -557,7 +646,10 @@ onMounted(() => {
   overflow: hidden;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: transform $duration-base $ease-out, box-shadow $duration-base $ease-out;
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  // Hardware acceleration for magnetic hover
+  transform: translateZ(0);
+  backface-visibility: hidden;
 
   i {
     font-size: $text-base;
@@ -568,14 +660,23 @@ onMounted(() => {
     align-items: center;
     gap: $space-2;
     z-index: 2;
+    // Optimize text rendering
+    transform: translateZ(0);
   }
 
   .btn-glow {
     position: absolute;
     inset: -40%;
-    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.5), transparent 70%);
-    filter: blur(40px);
-    opacity: 0.7;
+    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.4), transparent 70%);
+    filter: blur(20px); // Reduced blur for better performance
+    opacity: 0.6;
+    // Optimize glow rendering
+    transform: translateZ(0);
+  }
+
+  // Optimized hover states
+  &:hover {
+    transform: translateY(-1px) translateZ(0);
   }
 }
 
@@ -672,7 +773,10 @@ onMounted(() => {
   background: linear-gradient(160deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.35) 100%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 40px 80px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(16px); // Reduced blur for performance
+  // Hardware acceleration for 3D transforms
+  transform-style: preserve-3d;
+  will-change: transform;
 
   :root.light & {
     background: linear-gradient(160deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.6) 100%);
@@ -738,6 +842,8 @@ onMounted(() => {
   border: 1px solid rgba(255, 255, 255, 0.15);
   overflow: hidden;
   margin-bottom: $space-5;
+  // Optimize board rendering
+  transform: translateZ(0);
 
   :root.light & {
     background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.35));
@@ -760,7 +866,14 @@ onMounted(() => {
   justify-content: center;
   font-size: clamp(2.5rem, 4vw, 3.5rem);
   color: rgba(255, 255, 255, 0.9);
-  box-shadow: inset 0 8px 18px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.2); // Lighter shadow
+  // Optimize chess piece rendering
+  transform: translateZ(0);
+  transition: transform 0.2s ease-out;
+
+  &:hover {
+    transform: translateY(-1px) translateZ(0);
+  }
 
   &.light {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
@@ -771,7 +884,7 @@ onMounted(() => {
   }
 
   :root.light & {
-    box-shadow: inset 0 8px 18px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.06);
     color: rgba(26, 26, 26, 0.85);
 
     &.dark {
@@ -846,16 +959,18 @@ onMounted(() => {
   border-radius: 4px;
   background-color: currentColor;
   animation: scrollWheel 1.5s ease-in-out infinite;
+  // Hardware acceleration for smooth animation
+  transform: translateZ(0);
 }
 
 @keyframes scrollWheel {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
     opacity: 1;
   }
 
   50% {
-    transform: translateY(8px);
+    transform: translateY(8px) translateZ(0);
     opacity: 0.2;
   }
 }

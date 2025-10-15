@@ -128,19 +128,32 @@ export function useGSAP() {
     return tl
   }
   
-  // Floating animation for chess pieces
+  // Optimized floating animation for chess pieces
   const createFloatingAnimation = (selector, options = {}) => {
     const elements = document.querySelectorAll(selector)
     
     elements.forEach((element, index) => {
-      const tl = gsap.timeline({ repeat: -1, yoyo: true })
+      // Set hardware acceleration
+      gsap.set(element, { 
+        willChange: 'transform',
+        transform: 'translateZ(0)'
+      })
+      
+      const tl = gsap.timeline({ 
+        repeat: -1, 
+        yoyo: true,
+        onComplete: () => {
+          // Remove will-change after animation
+          gsap.set(element, { willChange: 'auto' })
+        }
+      })
       
       tl.to(element, {
-        y: options.amplitude || 20,
-        rotation: options.rotation || 5,
-        duration: options.duration || 3 + (index * 0.5),
+        y: options.amplitude || 15, // Reduced for smoother performance
+        rotation: options.rotation || 3, // Reduced rotation
+        duration: options.duration || 4 + (index * 0.3), // Slower = smoother
         ease: "sine.inOut",
-        delay: index * 0.3
+        delay: index * 0.2
       })
     })
   }
@@ -312,33 +325,48 @@ export function useGSAP() {
     }
   }
   
-  // Magnetic hover effect
+  // Optimized magnetic hover effect
   const enableMagneticHover = (selector, options = {}) => {
     const elements = document.querySelectorAll(selector)
-    const strength = options.strength || 0.5
-    const scale = options.scale || 1.1
-    const rotate = options.rotate || 5
+    const strength = options.strength || 0.3 // Reduced for better performance
+    const scale = options.scale || 1.05 // Reduced scale
+    const rotate = options.rotate || 2 // Reduced rotation
     
     elements.forEach(element => {
       let isHovering = false
+      let animationId = null
+      
+      // Set hardware acceleration
+      gsap.set(element, { 
+        willChange: 'transform',
+        transform: 'translateZ(0)',
+        backfaceVisibility: 'hidden'
+      })
       
       const handleMouseMove = (e) => {
         if (!isHovering) return
         
-        const rect = element.getBoundingClientRect()
-        const centerX = rect.left + rect.width / 2
-        const centerY = rect.top + rect.height / 2
+        // Cancel previous animation frame
+        if (animationId) {
+          cancelAnimationFrame(animationId)
+        }
         
-        const deltaX = (e.clientX - centerX) * strength
-        const deltaY = (e.clientY - centerY) * strength
-        
-        gsap.to(element, {
-          x: deltaX,
-          y: deltaY,
-          scale: scale,
-          rotation: (deltaX / rect.width) * rotate,
-          duration: 0.3,
-          ease: "power2.out"
+        animationId = requestAnimationFrame(() => {
+          const rect = element.getBoundingClientRect()
+          const centerX = rect.left + rect.width / 2
+          const centerY = rect.top + rect.height / 2
+          
+          const deltaX = (e.clientX - centerX) * strength
+          const deltaY = (e.clientY - centerY) * strength
+          
+          gsap.to(element, {
+            x: deltaX,
+            y: deltaY,
+            scale: scale,
+            rotation: (deltaX / rect.width) * rotate,
+            duration: 0.2, // Faster response
+            ease: "power1.out" // Lighter easing
+          })
         })
       }
       
@@ -346,32 +374,45 @@ export function useGSAP() {
         isHovering = true
         gsap.to(element, {
           scale: scale,
-          duration: 0.3,
-          ease: "power2.out"
+          duration: 0.2,
+          ease: "power1.out"
         })
       }
       
       const handleMouseLeave = () => {
         isHovering = false
+        if (animationId) {
+          cancelAnimationFrame(animationId)
+          animationId = null
+        }
+        
         gsap.to(element, {
           x: 0,
           y: 0,
           scale: 1,
           rotation: 0,
-          duration: 0.5,
-          ease: "power2.out"
+          duration: 0.3,
+          ease: "power1.out",
+          onComplete: () => {
+            // Remove will-change when not animating
+            gsap.set(element, { willChange: 'auto' })
+          }
         })
       }
       
-      element.addEventListener('mousemove', handleMouseMove)
-      element.addEventListener('mouseenter', handleMouseEnter)
-      element.addEventListener('mouseleave', handleMouseLeave)
+      element.addEventListener('mousemove', handleMouseMove, { passive: true })
+      element.addEventListener('mouseenter', handleMouseEnter, { passive: true })
+      element.addEventListener('mouseleave', handleMouseLeave, { passive: true })
       
       // Store cleanup function
       element._magneticCleanup = () => {
+        if (animationId) {
+          cancelAnimationFrame(animationId)
+        }
         element.removeEventListener('mousemove', handleMouseMove)
         element.removeEventListener('mouseenter', handleMouseEnter)
         element.removeEventListener('mouseleave', handleMouseLeave)
+        gsap.set(element, { willChange: 'auto' })
       }
     })
   }
