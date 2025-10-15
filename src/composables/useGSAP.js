@@ -446,63 +446,31 @@ export function useGSAP() {
   }
 }
 
-// Smooth scroll composable with Lenis integration
+// Smooth scroll composable (native implementation)
 export function useSmoothScroll() {
-  let lenis = null
+  let isScrolling = false
   
   const initSmoothScroll = async () => {
-    try {
-      const { default: Lenis } = await import('@studio-freight/lenis')
-      
-      if (lenis) {
-        return lenis
-      }
-      
-      lenis = new Lenis({
-        duration: 0.7,
-        easing: (t) => t,
-        smoothWheel: true,
-        smoothTouch: false,
-        normalizeWheel: true
-      })
-      
-      // Integrate with GSAP ScrollTrigger
-      lenis.on('scroll', ScrollTrigger.update)
-      
-      gsap.ticker.add((time) => {
-        lenis.raf(time * 1000)
-      })
-      
-      gsap.ticker.lagSmoothing(1000, 16)
-      
-      return lenis
-    } catch (error) {
-      console.warn('Lenis not available, falling back to native scroll')
-      return null
-    }
+    // For now, using native smooth scroll
+    // Lenis can be added later if needed
+    console.info('Using native smooth scroll')
+    return null
   }
   
   const scrollTo = (target, options = {}) => {
-    if (lenis) {
-      lenis.scrollTo(target, {
-        duration: options.duration || 2,
-        easing: options.easing || ((t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))),
-        ...options
+    // Native smooth scroll implementation
+    const element = typeof target === 'string' ? document.querySelector(target) : target
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: options.block || 'start',
+        inline: options.inline || 'nearest'
       })
-    } else {
-      // Fallback to native smooth scroll
-      const element = typeof target === 'string' ? document.querySelector(target) : target
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
-      }
     }
   }
   
   const destroy = () => {
-    if (lenis) {
-      lenis.destroy()
-      lenis = null
-    }
+    // No cleanup needed for native scroll
   }
   
   onUnmounted(() => {
@@ -513,6 +481,6 @@ export function useSmoothScroll() {
     initSmoothScroll,
     scrollTo,
     destroy,
-    getInstance: () => lenis
+    getInstance: () => null
   }
 }
