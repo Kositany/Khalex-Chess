@@ -544,38 +544,37 @@ onMounted(() => {
 }
 
 .title-highlight {
-  background: linear-gradient(135deg, #d4af37 0%, #f7dc6f 25%, #e67e22 50%, #c0392b 75%, #8e44ad 100%);
-  background-clip: text;
+  /* Strong fallback for all browsers */
+  color: #d4af37;
+  font-weight: bold;
+  
+  /* Progressive enhancement for modern browsers */
+  background: linear-gradient(135deg, #d4af37, #f7dc6f, #e67e22, #c0392b, #8e44ad);
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 8px 28px rgba(212, 175, 55, 0.35);
-  // Enhanced gradient animation
-  background-size: 200% auto;
-  animation: gradientShift 3s ease-in-out infinite;
-  // Add a subtle glow effect
+  background-clip: text;
+  animation: gradientShift 4s ease-in-out infinite;
+  
+  /* Ensure it displays as block for proper gradient rendering */
+  display: inline-block;
   position: relative;
   
-  &::before {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: linear-gradient(135deg, #d4af37 0%, #f7dc6f 25%, #e67e22 50%, #c0392b 75%, #8e44ad 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: blur(3px);
-    opacity: 0.5;
-    z-index: -1;
+  /* Only make transparent if browser supports it */
+  @supports (-webkit-background-clip: text) or (background-clip: text) {
+    color: transparent;
   }
 }
 
 @keyframes gradientShift {
-  0%, 100% {
+  0% {
     background-position: 0% 50%;
   }
   50% {
     background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
