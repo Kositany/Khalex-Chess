@@ -120,19 +120,28 @@
             </div>
 
             <ul class="visual-list">
-              <li>
-                <i class="fas fa-wave-square"></i>
-                Motion curves tuned from GSAP solution archives
-              </li>
-              <li>
-                <i class="fas fa-microchip"></i>
-                AI-assisted blunder tracking & resilience scoring
-              </li>
-              <li>
-                <i class="fas fa-sun"></i>
-                Weekend intensives with cinematic endgame breakdowns
-              </li>
-            </ul>
+  <li>
+    <i class="fas fa-chess-knight"></i>
+    Strong fundamentals, move by move.
+  </li>
+  <li>
+    <i class="fas fa-users"></i>
+    Expert coaches, personal mentorship.
+  </li>
+  <li>
+    <i class="fas fa-brain"></i>
+    Puzzles, analysis, mindset training.
+  </li>
+  <li>
+    <i class="fas fa-bullseye"></i>
+    Clear levels, measurable progress.
+  </li>
+  <li>
+    <i class="fas fa-trophy"></i>
+    Real tournaments, real confidence.
+  </li>
+</ul>
+
           </div>
         </div>
       </div>

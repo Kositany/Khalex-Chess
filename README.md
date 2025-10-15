@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Khalex Chess - Professional Chess Training Website
 
 A complete, production-ready Vue 3 website for Khalex Chess with Node.js backend, featuring MPESA mobile payments, newsletter subscription, contact forms, e-commerce functionality, and advanced animations.
@@ -290,3 +291,7 @@ Unleashing Young Minds' Potential Through Chess.
 ---
 
 **Built with ❤️ for chess education and youth development**
+=======
+# Khalex-Chess
+Chess Website
+>>>>>>> 9468ca56cdf5880407f07fbee32b22f1d60ed2fc
