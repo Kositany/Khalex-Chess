@@ -1,0 +1,39 @@
+{
+  "name": "khalex-chess",
+  "version": "1.0.0",
+  "description": "Khalex Chess - Professional chess training website",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "node server/index.js",
+    "dev:server": "nodemon server/index.js",
+    "dev:full": "concurrently \"npm run dev\" \"npm run dev:server\""
+  },
+  "dependencies": {
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4",
+    "pinia": "^2.1.6",
+    "@vueuse/core": "^10.4.1",
+    "gsap": "^3.12.2",
+    "express": "^4.18.2",
+    "axios": "^1.5.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "express-rate-limit": "^6.10.0",
+    "dotenv": "^16.3.1",
+    "nodemailer": "^6.9.4",
+    "mongoose": "^7.5.0",
+    "joi": "^17.9.2",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.3.4",
+    "vite": "^4.4.9",
+    "nodemon": "^3.0.1",
+    "concurrently": "^8.2.1",
+    "sass": "^1.66.1"
+  }
+}
