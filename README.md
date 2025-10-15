@@ -1,4 +1,4 @@
-# Khalex Chess Academy<<<<<<< HEAD
+# Khalex Chess Academy
 
 # Khalex Chess - Professional Chess Training Website
 
