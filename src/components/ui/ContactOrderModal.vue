@@ -92,7 +92,7 @@
               </div>
               <div class="method-info">
                 <h5>Email</h5>
-                <p>orders@khalexchess.com</p>
+                <p>khaltonyx@gmail.com</p>
                 <button @click="sendEmail" class="contact-btn btn-email">
                   <i class="fas fa-envelope"></i>
                   Send Email
@@ -175,7 +175,7 @@ const isFullCart = computed(() => props.cartItems && props.cartItems.length > 0)
 
 // Contact information
 const phoneNumber = '+254796113550'
-const email = 'orders@khalexchess.com'
+const email = 'khaltonyx@gmail.com'
 
 // Methods
 const closeModal = () => {

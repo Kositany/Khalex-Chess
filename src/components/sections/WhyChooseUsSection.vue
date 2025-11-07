@@ -68,6 +68,46 @@ const reasons = ref([
 <style lang="scss" scoped>
 .why-choose-us-section {
   background-color: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      url('/certificate-from-khalex-chess.jpg'),
+      url('/children-holding-certificate.jpg');
+    background-size: 320px auto, 300px auto;
+    background-position: calc(100% + 60px) 20%, -60px 80%;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+    filter: brightness(1.5) contrast(1.4) saturate(1.5);
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 85% 30%, rgba(0, 0, 0, 0.05) 150px, transparent 250px),
+      radial-gradient(circle at 15% 70%, rgba(0, 0, 0, 0.05) 150px, transparent 250px);
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .container {
+    position: relative;
+    z-index: 2;
+  }
 }
 
 .section-header {
@@ -86,7 +126,8 @@ const reasons = ref([
 }
 
 .reason-card {
-  background-color: var(--bg-secondary);
+  background-color: rgba(var(--bg-secondary-rgb), 0.85);
+  backdrop-filter: blur(10px);
   border-radius: $radius-xl;
   padding: $space-8;
   text-align: center;

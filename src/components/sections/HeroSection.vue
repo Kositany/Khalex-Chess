@@ -3,7 +3,7 @@
     <div class="hero-background">
       <img
         class="bg-image"
-        src="@/assets/1628356484751.jpeg"
+        src="/coach-with-children.jpg"
         alt="Immersive chess mentorship session"
       >
 
@@ -389,14 +389,14 @@ onMounted(() => {
   height: 120%;
   transform: translate(-50%, -50%) scale(1.08);
   object-fit: cover;
-  filter: brightness(0.5) contrast(1.2) saturate(1.1);
+  filter: brightness(1.0) contrast(1.1) saturate(1.3);
   transition: transform 0.3s ease-out;
   // Hardware acceleration
   will-change: transform;
   transform-style: preserve-3d;
 
   :root.light & {
-    filter: brightness(0.78) contrast(1.05) saturate(0.95);
+    filter: brightness(1.1) contrast(1.0) saturate(1.2);
   }
 }
 
@@ -442,11 +442,14 @@ onMounted(() => {
 .grid-overlay {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 80px 80px;
-  opacity: 0.3;
-  mix-blend-mode: screen;
+  background-size: 50px 50px, 50px 50px;
+  background-position: 0 0, 0 0;
+  background-repeat: repeat, repeat;
+  opacity: 0.35;
+  mix-blend-mode: normal;
   // Optimize background rendering
   will-change: auto;
 }
@@ -517,15 +520,17 @@ onMounted(() => {
   font-size: $text-sm;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: $font-semibold;
   display: inline-flex;
   align-items: center;
   gap: $space-2;
   mix-blend-mode: screen;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), 0 2px 6px rgba(0, 0, 0, 0.6);
 
   :root.light & {
-    color: rgba(26, 26, 26, 0.65);
+    color: rgba(26, 26, 26, 0.85);
+    text-shadow: 0 4px 12px rgba(255, 255, 255, 0.9), 0 2px 6px rgba(255, 255, 255, 0.7);
   }
 }
 
@@ -537,6 +542,7 @@ onMounted(() => {
   flex-direction: column;
   gap: $space-1;
   perspective: 1200px;
+  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .title-line {
@@ -588,13 +594,15 @@ onMounted(() => {
 .hero-subtitle {
   font-size: clamp(1rem, 2.2vw, 1.2rem);
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.95);
   max-width: 560px;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.5);
   // Hardware acceleration for smoother text rendering
   transform: translateZ(0);
 
   :root.light & {
-    color: rgba(26, 26, 26, 0.7);
+    color: rgba(26, 26, 26, 0.9);
+    text-shadow: 0 4px 16px rgba(255, 255, 255, 0.9), 0 2px 8px rgba(255, 255, 255, 0.7);
   }
 }
 

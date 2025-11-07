@@ -114,6 +114,46 @@ const services = ref([
 <style lang="scss" scoped>
 .services-section {
   background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      url('/boy-thinking-about-move.jpg'),
+      url('/girl-with-black-pieces.jpg');
+    background-size: 350px auto, 320px auto;
+    background-position: -80px 20%, calc(100% + 80px) 80%;
+    background-repeat: no-repeat;
+    opacity: 0.25;
+    filter: brightness(1.4) contrast(1.5) saturate(1.6);
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 15% 50%, rgba(0, 0, 0, 0.03) 200px, transparent 300px),
+      radial-gradient(circle at 85% 50%, rgba(0, 0, 0, 0.03) 200px, transparent 300px);
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .container {
+    position: relative;
+    z-index: 2;
+  }
 }
 
 .section-header {
@@ -132,7 +172,8 @@ const services = ref([
 }
 
 .service-card {
-  background-color: var(--bg-primary);
+  background-color: rgba(var(--bg-primary-rgb), 0.85);
+  backdrop-filter: blur(10px);
   border-radius: $radius-xl;
   padding: $space-8;
   box-shadow: var(--shadow);

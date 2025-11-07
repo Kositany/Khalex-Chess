@@ -54,8 +54,8 @@
           <div class="founder-profile">
             <div class="profile-card">
               <div class="profile-image">
-                <div class="image-placeholder">
-                  <i class="fas fa-user-tie"></i>
+                <div class="image-container" style="background-image: url('/coach-with-students-part-2.jpg');">
+                  <div class="image-overlay"></div>
                 </div>
               </div>
               
@@ -322,6 +322,30 @@ onMounted(() => {
 .profile-image {
   text-align: center;
   margin-bottom: $space-6;
+
+  .image-container {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    border: 3px solid var(--text-accent);
+    
+    .image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0, 0, 0, 0.1));
+      border-radius: 50%;
+    }
+  }
 
   .image-placeholder {
     width: 120px;

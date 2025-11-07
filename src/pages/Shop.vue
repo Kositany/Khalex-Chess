@@ -3,11 +3,7 @@
     <!-- Enhanced page header with parallax -->
     <div class="page-header parallax-bg" ref="pageHeader">
       <div class="header-bg-media">
-        <img 
-          class="header-bg-image"
-          src="@/assets/1628356476895.jpeg"
-          alt="Premium chess equipment display"
-        >
+        <div class="header-bg-image"></div>
         <div class="header-overlay"></div>
       </div>
       
@@ -510,20 +506,35 @@ const closeContactModal = () => {
 
 .page-header {
   background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-  padding: $space-16 0;
+  padding: $space-20 0;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
   text-align: center;
   border-bottom: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;
+  
+  @media (max-width: 768px) {
+    min-height: 60vh;
+    padding: $space-16 0;
+  }
+  
+  @media (min-width: 1200px) {
+    min-height: 75vh;
+    padding: $space-24 0;
+  }
 
   h1 {
     color: var(--text-primary);
     margin-bottom: $space-4;
+    text-shadow: 0 8px 24px rgba(0, 0, 0, 0.9), 0 4px 12px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.5);
   }
 
   p {
     color: var(--text-secondary);
     font-size: $text-lg;
+    text-shadow: 0 6px 18px rgba(0, 0, 0, 0.8), 0 3px 9px rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -535,32 +546,128 @@ const closeContactModal = () => {
 }
 
 .header-bg-image {
-  width: 110%;
-  height: 110%;
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1.05);
-  filter: brightness(0.55) contrast(1.1);
+  top: 0;
+  left: 0;
+  transform: scale(1.02);
+  background-image: url('/angle-with-kids-in-background.jpg');
+  background-size: cover;
+  background-position: center 25%;
+  background-repeat: no-repeat;
+  filter: brightness(1.3) contrast(1.1) saturate(1.4);
   transition: transform $duration-slow $ease-out;
 
+  // Award-winning hover effect
+  &:hover {
+    transform: scale(1.05);
+  }
+
   :root.light & {
-    filter: brightness(0.8) contrast(1.05);
+    filter: brightness(1.2) contrast(1.0) saturate(1.3);
+  }
+  
+  // Better positioning to show people without cutting off
+  @media (max-width: 768px) {
+    background-position: center 20%;
+  }
+  
+  @media (min-width: 1200px) {
+    background-position: center 30%;
   }
 }
 
 .header-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.8) 100%);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.25) 100%);
   z-index: 2;
+  
+  // Enhanced overlay for better text contrast in light mode
+  :root.light & {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.15) 40%, rgba(0, 0, 0, 0.4) 100%);
+  }
 }
 
 .parallax-bg .container,
 .parallax-bg .header-content {
   position: relative;
   z-index: 3;
+}
+
+.header-title {
+  font-family: $font-display;
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  line-height: 1.1;
+  margin-bottom: $space-4;
+  color: white;
+  
+  .title-word {
+    display: inline-block;
+    text-shadow: 
+      0 12px 32px rgba(0, 0, 0, 0.95), 
+      0 8px 24px rgba(0, 0, 0, 0.8), 
+      0 4px 12px rgba(0, 0, 0, 0.7), 
+      0 2px 6px rgba(0, 0, 0, 0.6),
+      0 1px 3px rgba(0, 0, 0, 0.5);
+    
+    // Enhanced contrast for light mode
+    :root.light & {
+      text-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.98), 
+        0 8px 24px rgba(0, 0, 0, 0.9), 
+        0 4px 12px rgba(0, 0, 0, 0.8), 
+        0 2px 6px rgba(0, 0, 0, 0.7),
+        0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+    
+    &.highlight {
+      background: linear-gradient(135deg, #d4af37, #f7dc6f, #e67e22);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
+      text-shadow: none; // Remove shadow for gradient text
+      
+      @supports not (-webkit-background-clip: text) {
+        color: #d4af37;
+        text-shadow: 
+          0 12px 32px rgba(0, 0, 0, 0.95), 
+          0 8px 24px rgba(0, 0, 0, 0.8), 
+          0 4px 12px rgba(0, 0, 0, 0.7), 
+          0 2px 6px rgba(0, 0, 0, 0.6);
+      }
+    }
+  }
+}
+  
+.header-subtitle {
+  font-size: $text-lg;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: $space-6;
+  font-weight: $font-medium;
+  text-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.9), 
+    0 4px 12px rgba(0, 0, 0, 0.7), 
+    0 2px 6px rgba(0, 0, 0, 0.5),
+    0 1px 3px rgba(0, 0, 0, 0.4);
+    
+  // Enhanced contrast for light mode
+  :root.light & {
+    color: rgba(255, 255, 255, 0.98);
+    text-shadow: 
+      0 8px 24px rgba(0, 0, 0, 0.95), 
+      0 4px 12px rgba(0, 0, 0, 0.8), 
+      0 2px 6px rgba(0, 0, 0, 0.7),
+      0 1px 3px rgba(0, 0, 0, 0.6);
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .shop-content {
