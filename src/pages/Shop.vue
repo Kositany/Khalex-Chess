@@ -663,6 +663,38 @@ const closeContactModal = () => {
       align-items: center;
       gap: $space-3;
 
+      .remove-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        background-color: var(--bg-secondary);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: $radius-md;
+        cursor: pointer;
+        transition: all $duration-fast $ease-out;
+        font-size: $text-sm;
+
+        &:hover {
+          background-color: #dc2626;
+          color: white;
+          border-color: #dc2626;
+          transform: scale(1.1);
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+
+        i {
+          font-size: 12px;
+          line-height: 1;
+        }
+      }
+
       .quantity-controls {
         display: flex;
         align-items: center;
@@ -677,6 +709,38 @@ const closeContactModal = () => {
           font-weight: $font-medium;
           min-width: 20px;
           text-align: center;
+        }
+
+        .quantity-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 28px;
+          height: 28px;
+          padding: 0;
+          background-color: var(--bg-primary);
+          color: var(--text-primary);
+          border: 1px solid var(--border-color);
+          border-radius: $radius-sm;
+          cursor: pointer;
+          transition: all $duration-fast $ease-out;
+          font-size: $text-xs;
+
+          &:hover {
+            background-color: var(--text-accent);
+            color: var(--bg-primary);
+            border-color: var(--text-accent);
+            transform: scale(1.1);
+          }
+
+          &:active {
+            transform: scale(0.95);
+          }
+
+          i {
+            font-size: 10px;
+            line-height: 1;
+          }
         }
       }
     }

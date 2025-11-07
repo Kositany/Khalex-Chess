@@ -52,7 +52,7 @@ Customer → Browse Products → Add to Cart → Automated Checkout → M-Pesa P
 
 For questions about the implementation or to discuss the M-Pesa integration timeline:
 - **Technical Lead**: [Contact Information]
-- **Business Owner**: Khalex Chess (+254 711 234 567)
+- **Business Owner**: Khalex Chess (+254796113550)
 - **Email**: orders@khalexchess.com
 
 ## Getting Started

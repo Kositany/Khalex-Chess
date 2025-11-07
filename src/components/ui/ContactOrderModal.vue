@@ -62,7 +62,7 @@
               </div>
               <div class="method-info">
                 <h5>Call Us</h5>
-                <p>+254 711 234 567</p>
+                <p>+254796113550</p>
                 <button @click="makePhoneCall" class="contact-btn btn-phone">
                   <i class="fas fa-phone"></i>
                   Call Now
@@ -77,7 +77,7 @@
               </div>
               <div class="method-info">
                 <h5>WhatsApp</h5>
-                <p>+254 711 234 567</p>
+                <p>+254796113550</p>
                 <button @click="openWhatsApp" class="contact-btn btn-whatsapp">
                   <i class="fab fa-whatsapp"></i>
                   Message on WhatsApp
@@ -174,7 +174,7 @@ const cartStore = useCartStore()
 const isFullCart = computed(() => props.cartItems && props.cartItems.length > 0)
 
 // Contact information
-const phoneNumber = '+254711234567'
+const phoneNumber = '+254796113550'
 const email = 'orders@khalexchess.com'
 
 // Methods
