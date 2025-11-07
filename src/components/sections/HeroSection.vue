@@ -543,6 +543,16 @@ onMounted(() => {
   gap: $space-1;
   perspective: 1200px;
   text-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
+  
+  // Enhanced contrast for light mode (same as About section)
+  :root.light & {
+    text-shadow: 
+      0 16px 40px rgba(0, 0, 0, 0.98), 
+      0 12px 32px rgba(0, 0, 0, 0.9), 
+      0 8px 24px rgba(0, 0, 0, 0.8), 
+      0 4px 12px rgba(0, 0, 0, 0.7),
+      0 2px 6px rgba(0, 0, 0, 0.6);
+  }
 }
 
 .title-line {
@@ -601,8 +611,12 @@ onMounted(() => {
   transform: translateZ(0);
 
   :root.light & {
-    color: rgba(26, 26, 26, 0.9);
-    text-shadow: 0 4px 16px rgba(255, 255, 255, 0.9), 0 2px 8px rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.98);
+    text-shadow: 
+      0 12px 32px rgba(0, 0, 0, 0.95), 
+      0 8px 24px rgba(0, 0, 0, 0.8), 
+      0 4px 12px rgba(0, 0, 0, 0.7),
+      0 2px 6px rgba(0, 0, 0, 0.6);
   }
 }
 
